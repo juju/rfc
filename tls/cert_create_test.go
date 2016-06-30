@@ -16,7 +16,6 @@ import (
 
 	"github.com/juju/testing"
 	jc "github.com/juju/testing/checkers"
-	"github.com/juju/utils"
 	gc "gopkg.in/check.v1"
 
 	"github.com/juju/rfc/tls"
@@ -218,7 +217,7 @@ func checkTLSConnection(c *gc.C, caCert, srvCert *x509.Certificate, srvKey *rsa.
 	var clientState stdtls.ConnectionState
 	done := make(chan error)
 	go func() {
-		config := utils.SecureTLSConfig()
+		config := tls.SecureTLSConfig()
 		config.Certificates = []stdtls.Certificate{{
 			Certificate: [][]byte{srvCert.Raw},
 			PrivateKey:  srvKey,
@@ -232,7 +231,7 @@ func checkTLSConnection(c *gc.C, caCert, srvCert *x509.Certificate, srvKey *rsa.
 		close(done)
 	}()
 
-	tlsConfig := utils.SecureTLSConfig()
+	tlsConfig := tls.SecureTLSConfig()
 	tlsConfig.ServerName = "anyServer"
 	tlsConfig.RootCAs = clientCertPool
 	clientConn := stdtls.Client(p0, tlsConfig)

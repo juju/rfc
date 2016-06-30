@@ -10,7 +10,6 @@ import (
 	"github.com/juju/errors"
 	"github.com/juju/testing"
 	jc "github.com/juju/testing/checkers"
-	"github.com/juju/utils"
 	gc "gopkg.in/check.v1"
 
 	"github.com/juju/rfc/tls"
@@ -155,4 +154,4 @@ func (s *ConfigSuite) TestRawValidateBadServerCertFormat(c *gc.C) {
 	c.Check(err, gc.ErrorMatches, `invalid ExpectedServerCertPEM: no certificates found`)
 }
 
-var secureConfig = utils.SecureTLSConfig()
+var secureConfig = tls.SecureTLSConfig()
