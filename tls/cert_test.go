@@ -23,11 +23,7 @@ func (RawCertSuite) Test(c *gc.C) {
 }
 
 func (s *RawCertSuite) TestRawValidateFull(c *gc.C) {
-	cfg := tls.RawCert{
-		CACertPEM: tlstest.CACert,
-		CertPEM:   tlstest.ServerCert,
-		KeyPEM:    tlstest.ServerKey,
-	}
+	cfg := tlstest.ServerCert
 
 	err := cfg.Validate()
 
@@ -166,9 +162,9 @@ func (s *RawCertSuite) TestRawValidateCertKeyMismatch(c *gc.C) {
 
 func (s *RawCertSuite) TestRawValidateCACertMismatch(c *gc.C) {
 	cfg := tls.RawCert{
-		CACertPEM: tlstest.OtherCACert,
-		CertPEM:   tlstest.ServerCert,
-		KeyPEM:    tlstest.ServerKey,
+		CertPEM:   tlstest.ServerCert.CertPEM,
+		KeyPEM:    tlstest.ServerCert.KeyPEM,
+		CACertPEM: tlstest.OtherCACert.CertPEM,
 	}
 
 	err := cfg.Validate()

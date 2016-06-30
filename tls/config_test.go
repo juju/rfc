@@ -25,9 +25,9 @@ var _ = gc.Suite(ConfigSuite{})
 func (ConfigSuite) TestTLSFull(c *gc.C) {
 	cfg := tls.Config{
 		RawCert: tls.RawCert{
-			CertPEM:   tlstest.ServerCert,
-			KeyPEM:    tlstest.ServerKey,
-			CACertPEM: tlstest.CACert,
+			CertPEM:   tlstest.ServerCert.CertPEM,
+			KeyPEM:    tlstest.ServerCert.KeyPEM,
+			CACertPEM: tlstest.CACert.CertPEM,
 		},
 		ServerName:            "a.b.c",
 		ExpectedServerCertPEM: validCert2,
@@ -59,9 +59,9 @@ func (ConfigSuite) TestTLSFull(c *gc.C) {
 func (s *ConfigSuite) TestRawValidateFull(c *gc.C) {
 	cfg := tls.Config{
 		RawCert: tls.RawCert{
-			CertPEM:   tlstest.ServerCert,
-			KeyPEM:    tlstest.ServerKey,
-			CACertPEM: tlstest.CACert,
+			CertPEM:   tlstest.ServerCert.CertPEM,
+			KeyPEM:    tlstest.ServerCert.KeyPEM,
+			CACertPEM: tlstest.CACert.CertPEM,
 		},
 		ServerName:            "a.b.c",
 		ExpectedServerCertPEM: validCert2,
@@ -75,9 +75,9 @@ func (s *ConfigSuite) TestRawValidateFull(c *gc.C) {
 func (s *ConfigSuite) TestRawValidateNoServerName(c *gc.C) {
 	cfg := tls.Config{
 		RawCert: tls.RawCert{
-			CertPEM:   tlstest.ServerCert,
-			KeyPEM:    tlstest.ServerKey,
-			CACertPEM: tlstest.CACert,
+			CertPEM:   tlstest.ServerCert.CertPEM,
+			KeyPEM:    tlstest.ServerCert.KeyPEM,
+			CACertPEM: tlstest.CACert.CertPEM,
 		},
 		ExpectedServerCertPEM: validCert2,
 	}
