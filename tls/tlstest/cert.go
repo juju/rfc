@@ -5,12 +5,12 @@ package tlstest
 
 import (
 	"crypto/rsa"
-	stdtls "crypto/tls"
+	"crypto/tls"
 	"crypto/x509"
 	"fmt"
 	"time"
 
-	"github.com/juju/rfc/tls"
+	"github.com/juju/juju/cert"
 )
 
 func init() {
@@ -53,19 +53,20 @@ type CertData struct {
 }
 
 func verifyCertificates() error {
-	_, err := stdtls.X509KeyPair([]byte(CACert), []byte(CAKey))
+	_, err := tls.X509KeyPair([]byte(CACert), []byte(CAKey))
 	if err != nil {
 		return fmt.Errorf("bad CA cert key pair: %v", err)
 	}
-	_, err = stdtls.X509KeyPair([]byte(ServerCert), []byte(ServerKey))
+	_, err = tls.X509KeyPair([]byte(ServerCert), []byte(ServerKey))
 	if err != nil {
 		return fmt.Errorf("bad server cert key pair: %v", err)
 	}
-	return tls.Verify(ServerCert, CACert, time.Now())
+	return cert.Verify(ServerCert, CACert, time.Now())
 }
 
 func mustNewCA() (string, string) {
-	caCert, caKey, err := tls.NewCA("juju testing", "1234-ABCD-IS-NOT-A-REAL-UUID", time.Now().AddDate(10, 0, 0), 512)
+	cert.KeyBits = 512
+	caCert, caKey, err := cert.NewCA("juju testing", "1234-ABCD-IS-NOT-A-REAL-UUID", time.Now().AddDate(10, 0, 0))
 	if err != nil {
 		panic(err)
 	}
@@ -73,8 +74,9 @@ func mustNewCA() (string, string) {
 }
 
 func mustNewServer() (string, string) {
+	cert.KeyBits = 512
 	var hostnames []string
-	srvCert, srvKey, err := tls.NewServer(CACert, CAKey, time.Now().AddDate(10, 0, 0), hostnames, 512)
+	srvCert, srvKey, err := cert.NewServer(CACert, CAKey, time.Now().AddDate(10, 0, 0), hostnames)
 	if err != nil {
 		panic(err)
 	}
@@ -82,7 +84,7 @@ func mustNewServer() (string, string) {
 }
 
 func mustParseCertAndKey(certPEM, keyPEM string) (*x509.Certificate, *rsa.PrivateKey) {
-	cert, key, err := tls.ParseCertAndKey(certPEM, keyPEM)
+	cert, key, err := cert.ParseCertAndKey(certPEM, keyPEM)
 	if err != nil {
 		panic(err)
 	}

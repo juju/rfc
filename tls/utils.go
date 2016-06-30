@@ -4,12 +4,9 @@
 package tls
 
 import (
-	"fmt"
-
-	"crypto/rsa"
-	"crypto/tls"
 	"crypto/x509"
 	"encoding/pem"
+	"time"
 
 	"github.com/juju/errors"
 )
@@ -31,22 +28,18 @@ func ParseCert(certPEM string) (*x509.Certificate, error) {
 	return nil, errors.Errorf("no certificates found")
 }
 
-// ParseCertAndKey parses the given PEM-formatted X509 certificate
-// and RSA private key.
-func ParseCertAndKey(certPEM, keyPEM string) (*x509.Certificate, *rsa.PrivateKey, error) {
-	tlsCert, err := tls.X509KeyPair([]byte(certPEM), []byte(keyPEM))
-	if err != nil {
-		return nil, nil, err
+// verifyCertCA ensures that the given certificate is valid with respect
+// to the given CA certificate at the given time.
+func verifyCertCA(cert, caCert *x509.Certificate, when time.Time) error {
+	pool := x509.NewCertPool()
+	pool.AddCert(caCert)
+	opts := x509.VerifyOptions{
+		DNSName:     "anyServer",
+		Roots:       pool,
+		CurrentTime: when,
 	}
-
-	cert, err := x509.ParseCertificate(tlsCert.Certificate[0])
-	if err != nil {
-		return nil, nil, err
+	if _, err := cert.Verify(opts); err != nil {
+		return errors.NewNotValid(err, "cert does not match CA cert")
 	}
-
-	key, ok := tlsCert.PrivateKey.(*rsa.PrivateKey)
-	if !ok {
-		return nil, nil, fmt.Errorf("private key with unexpected type %T", key)
-	}
-	return cert, key, nil
+	return nil
 }
