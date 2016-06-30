@@ -12,7 +12,7 @@ import (
 
 	"github.com/juju/version"
 
-	"github.com/juju/juju/standards/rfc5424"
+	"github.com/juju/rfc/rfc5424"
 )
 
 const (

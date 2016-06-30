@@ -9,8 +9,8 @@ import (
 	jc "github.com/juju/testing/checkers"
 	gc "gopkg.in/check.v1"
 
-	"github.com/juju/juju/standards/tls"
-	coretesting "github.com/juju/juju/testing"
+	"github.com/juju/rfc/tls"
+	"github.com/juju/rfc/tls/tlstest"
 )
 
 type RawCertSuite struct {
@@ -24,9 +24,9 @@ func (RawCertSuite) Test(c *gc.C) {
 
 func (s *RawCertSuite) TestRawValidateFull(c *gc.C) {
 	cfg := tls.RawCert{
-		CACertPEM: coretesting.CACert,
-		CertPEM:   coretesting.ServerCert,
-		KeyPEM:    coretesting.ServerKey,
+		CACertPEM: tlstest.CACert,
+		CertPEM:   tlstest.ServerCert,
+		KeyPEM:    tlstest.ServerKey,
 	}
 
 	err := cfg.Validate()
@@ -166,9 +166,9 @@ func (s *RawCertSuite) TestRawValidateCertKeyMismatch(c *gc.C) {
 
 func (s *RawCertSuite) TestRawValidateCACertMismatch(c *gc.C) {
 	cfg := tls.RawCert{
-		CACertPEM: coretesting.OtherCACert,
-		CertPEM:   coretesting.ServerCert,
-		KeyPEM:    coretesting.ServerKey,
+		CACertPEM: tlstest.OtherCACert,
+		CertPEM:   tlstest.ServerCert,
+		KeyPEM:    tlstest.ServerKey,
 	}
 
 	err := cfg.Validate()

@@ -11,7 +11,7 @@ import (
 
 	"github.com/juju/errors"
 
-	"github.com/juju/juju/standards/tls"
+	"github.com/juju/rfc/tls"
 )
 
 const (

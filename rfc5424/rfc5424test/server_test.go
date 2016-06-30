@@ -7,17 +7,16 @@ import (
 	"net"
 	"time"
 
-	gitjujutesting "github.com/juju/testing"
+	"github.com/juju/testing"
 	jc "github.com/juju/testing/checkers"
 	gc "gopkg.in/check.v1"
 
-	"github.com/juju/juju/standards/rfc5424"
-	"github.com/juju/juju/standards/rfc5424/rfc5424test"
-	"github.com/juju/juju/testing"
+	"github.com/juju/rfc/rfc5424"
+	"github.com/juju/rfc/rfc5424/rfc5424test"
 )
 
 type ServerSuite struct {
-	gitjujutesting.IsolationSuite
+	testing.IsolationSuite
 }
 
 var _ = gc.Suite(&ServerSuite{})
@@ -76,7 +75,7 @@ func (s *ServerSuite) TestSend(c *gc.C) {
 		c.Assert(ok, jc.IsTrue)
 		c.Assert(msg.RemoteAddr, gc.Equals, clientAddr.String())
 		c.Assert(msg.Message, gc.Equals, `<28>1 1970-01-01T15:05:21.000000123Z a.b.org an-app 119 xyz... [sde0 abc="123" def="456"][sde1 abc="123" def="456"] a message`)
-	case <-time.After(testing.LongWait):
+	case <-time.After(10 * time.Second):
 		c.Fatal("timed out waiting for message")
 	}
 }

@@ -13,8 +13,8 @@ import (
 	"github.com/juju/utils"
 	gc "gopkg.in/check.v1"
 
-	"github.com/juju/juju/standards/tls"
-	coretesting "github.com/juju/juju/testing"
+	"github.com/juju/rfc/tls"
+	"github.com/juju/rfc/tls/tlstest"
 )
 
 type ConfigSuite struct {
@@ -26,9 +26,9 @@ var _ = gc.Suite(ConfigSuite{})
 func (ConfigSuite) TestTLSFull(c *gc.C) {
 	cfg := tls.Config{
 		RawCert: tls.RawCert{
-			CertPEM:   coretesting.ServerCert,
-			KeyPEM:    coretesting.ServerKey,
-			CACertPEM: coretesting.CACert,
+			CertPEM:   tlstest.ServerCert,
+			KeyPEM:    tlstest.ServerKey,
+			CACertPEM: tlstest.CACert,
 		},
 		ServerName:            "a.b.c",
 		ExpectedServerCertPEM: validCert2,
@@ -60,9 +60,9 @@ func (ConfigSuite) TestTLSFull(c *gc.C) {
 func (s *ConfigSuite) TestRawValidateFull(c *gc.C) {
 	cfg := tls.Config{
 		RawCert: tls.RawCert{
-			CertPEM:   coretesting.ServerCert,
-			KeyPEM:    coretesting.ServerKey,
-			CACertPEM: coretesting.CACert,
+			CertPEM:   tlstest.ServerCert,
+			KeyPEM:    tlstest.ServerKey,
+			CACertPEM: tlstest.CACert,
 		},
 		ServerName:            "a.b.c",
 		ExpectedServerCertPEM: validCert2,
@@ -76,9 +76,9 @@ func (s *ConfigSuite) TestRawValidateFull(c *gc.C) {
 func (s *ConfigSuite) TestRawValidateNoServerName(c *gc.C) {
 	cfg := tls.Config{
 		RawCert: tls.RawCert{
-			CertPEM:   coretesting.ServerCert,
-			KeyPEM:    coretesting.ServerKey,
-			CACertPEM: coretesting.CACert,
+			CertPEM:   tlstest.ServerCert,
+			KeyPEM:    tlstest.ServerKey,
+			CACertPEM: tlstest.CACert,
 		},
 		ExpectedServerCertPEM: validCert2,
 	}
