@@ -85,7 +85,7 @@ func (pen PrivateEnterpriseNumber) String() string {
 // Validate ensures that the number is correct.
 func (pen PrivateEnterpriseNumber) Validate() error {
 	if pen <= 0 { // 0 is reserved
-		fmt.Errorf("must be positive integer")
+		return fmt.Errorf("must be positive integer")
 	}
 	return nil
 }
