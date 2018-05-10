@@ -65,7 +65,7 @@ func (origin Origin) Params() []rfc5424.StructuredDataParam {
 
 	if origin.SoftwareName != "" {
 		params = append(params, rfc5424.StructuredDataParam{
-			Name:  "sofware",
+			Name:  "software",
 			Value: rfc5424.StructuredDataParamValue(origin.SoftwareName),
 		})
 	}
@@ -132,9 +132,9 @@ func (eid OriginEnterpriseID) isZero() bool {
 
 func (eid OriginEnterpriseID) path() []string {
 	path := make([]string, len(eid.SubTree)+1)
-	path[0] = eid.Number.String()
-	for i := len(eid.SubTree) - 1; i > 1; i-- {
-		path = append(path, fmt.Sprint(eid.SubTree[i]))
+	path[0] = fmt.Sprint(eid.Number)
+	for k := range eid.SubTree {
+		path[k+1] = fmt.Sprint(eid.SubTree[len(eid.SubTree)-1-k])
 	}
 	return path
 }
@@ -148,7 +148,7 @@ func (eid OriginEnterpriseID) String() string {
 func (eid OriginEnterpriseID) Validate() error {
 	for i, num := range eid.SubTree {
 		if num <= 0 {
-			fmt.Errorf("Subtree[%d] must be positive integer", i)
+			return fmt.Errorf("Subtree[%d] must be positive integer", i)
 		}
 	}
 
