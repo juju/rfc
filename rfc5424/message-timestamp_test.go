@@ -9,7 +9,7 @@ import (
 	"github.com/juju/testing"
 	gc "gopkg.in/check.v1"
 
-	"github.com/juju/rfc/rfc5424"
+	"github.com/juju/rfc/v2/rfc5424"
 )
 
 type TimestampSuite struct {

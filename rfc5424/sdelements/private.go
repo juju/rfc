@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/juju/rfc/rfc5424"
+	"github.com/juju/rfc/v2/rfc5424"
 )
 
 // Private is a custom structured data element associated with an
