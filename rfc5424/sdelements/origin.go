@@ -10,9 +10,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/juju/version"
+	"github.com/juju/version/v2"
 
-	"github.com/juju/rfc/rfc5424"
+	"github.com/juju/rfc/v2/rfc5424"
 )
 
 const (

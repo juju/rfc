@@ -6,12 +6,12 @@ package sdelements_test
 import (
 	"net"
 
-	"github.com/juju/rfc/rfc5424"
+	"github.com/juju/rfc/v2/rfc5424"
 
-	"github.com/juju/rfc/rfc5424/sdelements"
+	"github.com/juju/rfc/v2/rfc5424/sdelements"
 	"github.com/juju/testing"
 	jc "github.com/juju/testing/checkers"
-	"github.com/juju/version"
+	"github.com/juju/version/v2"
 	gc "gopkg.in/check.v1"
 )
 
