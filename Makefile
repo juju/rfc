@@ -1,4 +1,4 @@
-PROJECT := github.com/juju/rfc
+PROJECT := github.com/juju/rfc/v2
 
 .PHONY: check-licence check-go check
 
@@ -17,4 +17,4 @@ check-go:
 		echo go fmt is sad: $(GOFMT); \
 		exit 1; \
 	fi )
-	@(go tool vet -all -composites=false -copylocks=false .)
+	@(go vet -all -composites=false -copylocks=false .)
